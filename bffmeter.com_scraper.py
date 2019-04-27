@@ -5,15 +5,17 @@ from bs4 import BeautifulSoup
 url = "https://bestbuddymeter.com/bff/quiz/"
 headers = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36'}
 
+with open('OP_database.txt', 'r', encoding='utf-8') as f:
+    for lines in f:
+        questionNo = lines.strip().split(",")[0]
 
+print("Scraping resuming from quiz no: {}".format(questionNo))
 
 #Program runs inside this infinite loop.
 x=1
 while x<2:
-	with open('counter.txt', 'r') as fread:
-		questionNo = fread.readline().strip()
-		question_url = url + str(questionNo)
-	
+
+	question_url = url + str(questionNo)	
 	response = requests.get(question_url, headers = headers)
 	soup = BeautifulSoup(response.text, 'lxml')
 
@@ -112,8 +114,6 @@ while x<2:
 
 		#Increment the quiz counter.
 		questionNo = int(questionNo) + 1
-		with open('counter.txt', 'w') as f:
-			f.write(str(questionNo))
 
 	elif response.status_code == 200 and not str(soup.title).startswith("Best Friend Meter with", 7):
 		print("No more pages left to scrape. \n Last scraped question mumber: {}".format(questionNo))
