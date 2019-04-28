@@ -62,7 +62,7 @@ while x<2:
 			if tbody.tr.td.text !="":
 
 				for users, score, link in zip(tbody.find_all('td', class_="center"), tbody.find_all('td', class_="score"), tbody.find_all('a', href=True)):
-					answer_url = "https://bffmeter.com/quiz_ans/{}".format(link['href'].split("/")[2])
+					answer_url = "https://bestbuddymeter.com/bff/quiz_ans/{}".format(link['href'].split("/")[2])
 					answer_response = requests.get(answer_url, headers=headers)
 					answers_soup = BeautifulSoup(answer_response.text, 'lxml')
 					
